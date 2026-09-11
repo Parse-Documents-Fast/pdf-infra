@@ -29,3 +29,5 @@ docker compose -f docker-compose.infra.yml up -d
 cd whoami
 docker compose docker-compose.yml up
 ```
+# pdf-gateway
+Proxy o gateway para los microservicios de Parse-Documents-Fast.
