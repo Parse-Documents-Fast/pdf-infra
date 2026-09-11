@@ -1,0 +1,10 @@
+http:
+  middlewares:
+    rate-limit-redis:
+      rateLimit:
+        average: 70
+        period: 1s
+        burst: 100 # Pequeño pico de 100.
+        redis:
+          endpoints:
+            - "redis:6379"

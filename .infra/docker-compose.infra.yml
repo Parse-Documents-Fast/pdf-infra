@@ -1,0 +1,35 @@
+services:
+  reverse-proxy:
+    image: traefik:v3.6.1
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080" # Dashboard de Traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro,z
+      - ./config/traefik.yml:/etc/traefik/traefik.yml:ro,z
+      - ./config/config.yml:/etc/traefik/config.yml:ro,z
+      - ./certs:/etc/certs:ro,z
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - fast_pdf_network
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - fast_pdf_network
+
+networks:
+  fast_pdf_network:
+    name: fast_pdf_network
+    driver: bridge
