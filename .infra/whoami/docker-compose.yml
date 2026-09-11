@@ -1,0 +1,17 @@
+services:
+  whoami:
+    image: traefik/whoami
+    deploy:
+      replicas: 3 # Replicas para probar balanceo
+    networks:
+      - fast_pdf_network
+    labels:
+      - "traefik.enable=true"
+      # Dominio de prueba
+      - "traefik.http.routers.whoamiapp.rule=Host(`whoami.pdfservices.localhost`)"
+      # Conectar middleware en config.yml
+      - "traefik.http.routers.whoamiapp.middlewares=rate-limit-redis@file"
+
+networks:
+  fast_pdf_network:
+    external: true

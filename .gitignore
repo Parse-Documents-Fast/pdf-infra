@@ -1,0 +1,6 @@
+# Certificados personales
+
+.infra/certs/*.pem
+
+
+.agents/
