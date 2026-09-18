@@ -29,6 +29,20 @@ services:
     networks:
       - fast_pdf_network
 
+  redis-queue:
+    image: redis:7-alpine
+    container_name: redis-queue
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis-queue.conf
+    volumes:
+      - ./config/redis-queue.conf:/usr/local/etc/redis/redis-queue.conf:ro
+      - redis_queue_data:/data
+    networks:
+      - fast_pdf_network
+
+volumes:
+  redis_queue_data:
+
 networks:
   fast_pdf_network:
     name: fast_pdf_network
