@@ -9,6 +9,7 @@ Infraestructura base (`.infra`) para la arquitectura de microservicios del extra
 ### Traefik (API Gateway & Proxy Inverso)
   - *Access logs* y logs del sistema con sincronización de zona horaria local (`/etc/timezone`).
   - Enrutamiento y vinculación de middleware por *labels*. Faltan los labels correspondientes a la logica de negocio de del sistema.
+  - Circuit Breaker del middleware definido como `cb-documents`, abre el circuito en caso de que el 50% de las peticiones tarda más de 200ms o que el 25% de las respuestas sean 5xx. 
 
 ### Redis 7 (Persistencia de Rate Limit)
   - Control distribuido de cuota fijado a **70 peticiones/segundo por IP**.
