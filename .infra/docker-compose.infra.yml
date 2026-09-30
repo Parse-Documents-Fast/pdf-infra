@@ -17,15 +17,17 @@ services:
     networks:
       - fast_pdf_network
     depends_on:
-      - redis
+      - redis-ratelimiter
+      - redis-queue
+      - redis-cache
 
-  redis:
+  redis-ratelimiter:
     image: redis:7-alpine
-    container_name: redis
+    container_name: redis-ratelimiter
     restart: unless-stopped
-    command: redis-server /usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis-ratelimiter.conf
     volumes:
-      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - ./config/redis.conf:/usr/local/etc/redis/redis-ratelimiter.conf:ro
     networks:
       - fast_pdf_network
 
@@ -40,8 +42,20 @@ services:
     networks:
       - fast_pdf_network
 
+  redis-cache:
+    image: redis:7-alpine
+    container_name: redis-cache
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis-cache.conf
+    volumes:
+      - ./config/redis-cache.conf:/usr/local/etc/redis/redis-cache.conf:ro
+      - redis_cache_data:/data
+    networks:
+      - fast_pdf_network
+
 volumes:
   redis_queue_data:
+  redis_cache_data:
 
 networks:
   fast_pdf_network:
