@@ -15,6 +15,11 @@ providers:
     filename: /etc/traefik/config.yml
     watch: true
 
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
 
 log:
   level: INFO
