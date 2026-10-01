@@ -7,10 +7,18 @@ http:
         burst: 100 # Pequeño pico de 100.
         redis:
           endpoints:
-            - "redis:6379"
+            - "redis-ratelimiter:6379"
 
     cb-documents:
       circuitBreaker:
         # Abre el circuito si el 50% de las peticiones tarda más de 100ms
         expression: "ResponseCodeRatio(500, 600, 0, 600) > 0.25 || LatencyAtQuantileMS(50.0) > 200"
         # O si el 25% de las respuestas son errores 5xx
+
+
+tls:
+  certificates:
+    - certFile: /etc/certs/pdfmanager.pem
+      keyFile: /etc/certs/pdfmanager-key.pem
+      stores:
+        - default
