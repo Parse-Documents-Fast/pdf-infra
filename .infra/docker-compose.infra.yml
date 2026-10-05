@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     command: redis-server /usr/local/etc/redis/redis-ratelimiter.conf
     volumes:
-      - ./config/redis.conf:/usr/local/etc/redis/redis-ratelimiter.conf:ro
+      - ./config/redis-ratelimiter.conf:/usr/local/etc/redis/redis-ratelimiter.conf:ro
     networks:
       - fast_pdf_network
 
