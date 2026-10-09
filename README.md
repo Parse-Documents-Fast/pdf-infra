@@ -23,9 +23,14 @@ Infraestructura base (`.infra`) para la arquitectura de microservicios del extra
   - `noeviction` si se llena la cola no se aceptan mas trabajos.
 
 ### cache hit (Redis)
-  - Tercera instancia de Redis, cache tradicional que se comunica con `PDF-persistancie`
+  - Tercera instancia de Redis, cache tradicional que se comunica con `pdf-persistancie`
   - Memoria de 64 megas
   - Cache ligero volatil, `appendonly: no`.
+
+### Base de datos (Mongo)
+  - Unica instancia de datos para pdf-persistence. Expuesta en `27017:27017` dentro de `fast_pdf_network`
+  - Imagen mas nueva disponible.
+  - Healthcheck cada 30s
 
 ### Red Compartida (`fast_pdf_network`)
   - Red bridge interna que interconecta el proxy con los contenedores de la lógica de negocio.
@@ -35,7 +40,8 @@ Infraestructura base (`.infra`) para la arquitectura de microservicios del extra
 ## Levantamiento de la Infraestructura
 
 ```bash
-# Iniciar el entorno base (Traefik + Redis)
+# Iniciar el entorno base (Traefik + Redis + Mongo)
+cd .infra
 docker compose -f docker-compose.infra.yml up -d
 # whoamis de prueba
 cd whoami
