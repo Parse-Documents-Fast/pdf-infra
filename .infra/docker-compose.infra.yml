@@ -52,10 +52,29 @@ services:
       - redis_cache_data:/data
     networks:
       - fast_pdf_network
+  
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      - fast_pdf_network
+    volumes:
+      - mongo_storage_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh","--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
 
 volumes:
   redis_queue_data:
   redis_cache_data:
+  mongo_storage_data:
 
 networks:
   fast_pdf_network:
