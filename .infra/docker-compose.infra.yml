@@ -12,8 +12,6 @@ services:
       - ./config/traefik.yml:/etc/traefik/traefik.yml:ro,z
       - ./config/config.yml:/etc/traefik/config.yml:ro,z
       - ./certs:/etc/certs:ro,z
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     networks:
       - fast_pdf_network
     depends_on:
