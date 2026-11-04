@@ -7,6 +7,8 @@ services:
       - "80:80"
       - "443:443"
       - "8080:8080" # Dashboard de Traefik
+    enviroments:
+      - MAX_REQUEST_BODY_BYTES=${MAX_REQUEST_BODY_BYTES:-22020096}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro,z
       - ./config/traefik.yml:/etc/traefik/traefik.yml:ro,z

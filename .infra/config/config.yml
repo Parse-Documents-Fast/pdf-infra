@@ -1,5 +1,10 @@
 http:
   middlewares:
+
+    max-request-body:
+      buffering:
+        maxRequestBodyBytes: {{env "MAX_REQUEST_BODY_BYTES" | default "22020096"}} # Default 21 megas.
+
     rate-limit-redis:
       rateLimit:
         average: 70
